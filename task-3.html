@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+   
+   <meta charset="UTF-8">
+   <title>Fastfood</title>
+    
+<script>
+    
+    //Не знаю как добавлять топпинги с помощью метода addTopping(), а не в конструкторе
+    
+class Hamburger {
+
+  constructor(size, stuffing, topping1, topping2) {
+      this.size = size;
+      this.stuffing = stuffing;
+      this.topping1 = topping1;
+      this.topping2 = topping2;
+      
+      //хотела в отдельный метод всю информацию (массивы ниже) вставить. но почему-то тогда другие методы не видят это, хотя в магазине то же самое и работает :(
+      this.sizes = [ 
+        {size: 'small', price: 50, cal: 20},
+        {size: 'big', price: 100, cal: 40}
+      ];
+      this.stuffings = [
+        {stuffing: 'cheese', price: 10, cal: 20},
+        {stuffing: 'salad', price: 20, cal: 5},
+        {stuffing: 'potato', price: 15, cal: 10}
+      ];
+      this.toppings = [
+          {topping: 'spice', price: 15, cal: 0},
+          {topping: 'mayon', price: 20, cal: 5}
+      ]
+  }
+
+  removeTopping1(topping1) { // Убрать добавку 1
+      this.topping1 = undefined;
+  }
+      
+  removeTopping2(topping2) { // Убрать добавку 2
+      this.topping2 = undefined;
+    
+  }
+  getToppings(topping) {   // Получить список добавок
+      if (this.topping1 && this.topping2){
+          return `Добавки: ${this.topping1}, ${this.topping2}.`;
+      }
+      
+      else if (!this.topping1 && this.topping2) {
+          return `Добавки: ${this.topping2}.`;
+      }
+      
+      else if (!this.topping2 && this.topping1) {
+          return `Добавки: ${this.topping1}.`;
+      }
+      
+      else {
+          return 'Добавок нет.';
+      }
+      
+  }
+  getSize() { // Узнать размер гамбургера 
+      return `Размер заказанного бургера: ${this.size}.`;
+  }
+  getStuffing() {  // Узнать начинку гамбургера
+      return `Начинка бургера: ${this.stuffing}.`;
+  }
+
+  calculatePrice() {       // Узнать цену
+
+      let priceSize;
+      let priceStuff;
+      let priceTop1;
+      let priceTop2;
+      for(let i=0; i<this.sizes.length; i++) { 
+          if (this.size == this.sizes[i].size){
+              priceSize = this.sizes[i].price;
+          } 
+      }
+      
+      for(let i=0; i<this.stuffings.length; i++) {
+          if (this.stuffing == this.stuffings[i].stuffing){
+              priceStuff = this.stuffings[i].price;
+          }
+      }
+      
+      if(this.topping1) {
+          for(let i=0; i<this.toppings.length; i++) {
+              if (this.topping1 == this.toppings[i].topping){
+                  priceTop1 = this.toppings[i].price;
+              }
+          } 
+      }
+      else {
+          priceTop1 = 0;
+          priceTop2 = 0;
+      }
+      if(this.topping2) {
+          for(let i=0; i<this.toppings.length; i++) {
+              if (this.topping2 == this.toppings[i].topping){
+                  priceTop2 = this.toppings[i].price;
+              }
+          } 
+      }
+      else {
+          priceTop2 = 0;
+      }
+      const price = priceSize + priceStuff + priceTop1 + priceTop2;
+      return `Ваш бургер стоит ${price} рублей.`;
+  }
+    
+  calculateCalories() {    // Узнать калорийность 
+      let calSize;
+      let calStuff;
+      let calTop1;
+      let calTop2;
+      for(let i=0; i<this.sizes.length; i++) { 
+          if (this.size == this.sizes[i].size){
+              calSize = this.sizes[i].cal;
+          } 
+      }
+      
+      for(let i=0; i<this.stuffings.length; i++) {
+          if (this.stuffing == this.stuffings[i].stuffing){
+              calStuff = this.stuffings[i].cal;
+          }
+      }
+      
+      if(this.topping1) {
+          for(let i=0; i<this.toppings.length; i++) {
+              if (this.topping1 == this.toppings[i].topping){
+                  calTop1 = this.toppings[i].cal;
+              }
+          } 
+      }
+      else {
+          calTop1 = 0;
+          calTop2 = 0;
+      }
+      if(this.topping2) {
+          for(let i=0; i<this.toppings.length; i++) {
+              if (this.topping2 == this.toppings[i].topping){
+                  calTop2 = this.toppings[i].cal;
+              }
+          } 
+      }
+      else {
+          calTop2 = 0;
+      }
+      
+      const calories = calSize + calStuff + calTop1 + calTop2;
+      return `В вашем бургере ${calories} калорий.`;
+   }
+}
+    
+   //несколько вариантов гамбургеров: 
+const cheeseburgerBig = new Hamburger('big','cheese','mayon','spice');
+const cheeseburgerMini = new Hamburger('small','cheese','mayon')
+const hamburgerLight = new Hamburger('small','salad');
+const hamburgerCountry = new Hamburger('big','potato','spice');
+
+console.log(cheeseburgerMini.calculateCalories(), cheeseburgerMini.calculatePrice(), cheeseburgerMini.getSize(), cheeseburgerMini.getStuffing(), cheeseburgerMini.getToppings());
+    
+console.log(hamburgerCountry.calculateCalories(), hamburgerCountry.calculatePrice(), hamburgerCountry.getSize(), hamburgerCountry.getStuffing(), hamburgerCountry.getToppings());
+    
+    
+    
+</script>
+</head>
+    <body>
+</body>
+    
+</html>
